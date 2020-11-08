@@ -16,6 +16,32 @@
 				"description": "Get the properties of a node (taxon)"
 			},
 			"response": []
+		},
+		{
+			"name": "Post Properties",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"API::Reason\": {\r\n        \"type\": \"System.String\",\r\n        \"value\": \"My Reason\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7071/api/properties/main/Tenant1.Application1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"properties",
+						"main",
+						"Tenant1.Application1"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

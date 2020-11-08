@@ -21,13 +21,34 @@ namespace Configuration.App
             _taxonomyContainer = taxonomyContainer;
         }
 
-        [FunctionName("properties")]
-        public async Task<IActionResult> Run(
+        [FunctionName("getproperties")]
+        public async Task<IActionResult> GetProperties(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "properties/{taxonomy}/{path}")] HttpRequest req, string path, String taxonomy,
             ILogger log)
         {
             Dictionary<String, TaxonomyProperty> properties = _taxonomyContainer.Read(taxonomy, path);
             return new OkObjectResult(properties);
+        }
+
+        [FunctionName("postproperties")]
+        public async Task<IActionResult> PostProperties(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "properties/{taxonomy}/{path}")] HttpRequest req, string path, String taxonomy,
+            ILogger log)
+        {
+            Dictionary<String, TaxonomyProperty> values = JsonConvert.DeserializeObject<Dictionary<String, TaxonomyProperty>>(await req.ReadAsStringAsync());
+            if (values == null)
+                return new BadRequestResult();
+
+            foreach (String key in values.Keys)
+                _taxonomyContainer.Write(taxonomy, path, new KeyValuePair<String, TaxonomyProperty>(key, values[key]));
+
+            Dictionary<String, TaxonomyProperty> properties = _taxonomyContainer.Read(taxonomy, path);
+            return new OkObjectResult(properties);
+        }
+
+        private int List<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }

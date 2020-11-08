@@ -25,6 +25,27 @@ namespace TNDStudios.Utils.Configuration
             return String.Empty;
         }
 
+        public Boolean Write(string taxonomy, string path, KeyValuePair<String, TaxonomyProperty> property)
+        {
+            Taxonomies.TryGetValue(taxonomy, out Taxonomy _taxonomy);
+            if (_taxonomy == null)
+            {
+                _taxonomy = new Taxonomy();
+                Taxonomies.Add(taxonomy, _taxonomy);
+            }
+
+            _taxonomy.Nodes.TryGetValue(path, out TaxonomyNode _node);
+            if (_node == null)
+            {
+                _node = new TaxonomyNode();
+                _taxonomy.Nodes.Add(path, _node);
+            }
+
+            _node.Properties[property.Key] = property.Value;
+
+            return true;
+        }
+
         public Dictionary<String, TaxonomyProperty> Read(string taxonomy, string path)
         {
             Dictionary<String, TaxonomyProperty> _result = new Dictionary<string, TaxonomyProperty>();
@@ -85,7 +106,8 @@ namespace TNDStudios.Utils.Configuration
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            Type value = Type.GetType(reader.Value.ToString());
+            return value;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
