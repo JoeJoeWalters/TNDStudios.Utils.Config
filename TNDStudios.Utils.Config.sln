@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration", "Configuration\Configuration.csproj", "{E3F558B7-19C5-420A-BB14-59CF83A0F107}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration.App", "Configuration.App\Configuration.App.csproj", "{62B893C2-34F1-4FB0-8585-5390D25513DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration.Api", "Configuration.Api\Configuration.Api.csproj", "{62B893C2-34F1-4FB0-8585-5390D25513DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration.Tests", "Configuration.Tests\Configuration.Tests.csproj", "{13C3BB7F-AB53-4855-A234-2FDC232F2E52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration.Tests", "Configuration.Tests\Configuration.Tests.csproj", "{13C3BB7F-AB53-4855-A234-2FDC232F2E52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Postman", "Postman", "{957A89A2-A9C1-4FF2-AAE2-F57F8712B75E}"
+	ProjectSection(SolutionItems) = preProject
+		Configuration.postman_collection.json = Configuration.postman_collection.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

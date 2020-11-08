@@ -1,0 +1,22 @@
+{
+	"info": {
+		"_postman_id": "040f23fa-ad3f-4fcf-8e8c-8d6262b02f63",
+		"name": "Configuration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Properties",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Get the properties of a node (taxon)"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

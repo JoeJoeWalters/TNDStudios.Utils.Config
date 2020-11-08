@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,17 +39,18 @@ namespace TNDStudios.Utils.Configuration
                     {
                         _result[key] = _node.Properties[key];
                     }
+                }
 
-                    // Get the parent properties and add them in where they don't exist
-                    string _parentPath = GetParent(path);
-                    if (_parentPath != String.Empty)
+                // Regardless of if a node was found, move to the parent
+                // Get the parent properties and add them in where they don't exist
+                string _parentPath = GetParent(path);
+                if (_parentPath != String.Empty)
+                {
+                    Dictionary<string, TaxonomyProperty> _parent = Read(taxonomy, _parentPath);
+                    foreach (string key in _parent.Keys)
                     {
-                        Dictionary<string, TaxonomyProperty> _parent = Read(taxonomy, _parentPath);
-                        foreach (string key in _parent.Keys)
-                        {
-                            if (!_result.ContainsKey(key))
-                                _result[key] = _parent[key];
-                        }
+                        if (!_result.ContainsKey(key))
+                            _result[key] = _parent[key];
                     }
                 }
             }
@@ -68,7 +71,26 @@ namespace TNDStudios.Utils.Configuration
 
     public class TaxonomyProperty
     {
+        [JsonConverter(typeof(DataTypeConverter))]
         public Type Type { get; set; } = typeof(String);
         public String Value { get; set; } = String.Empty;
+    }
+
+    public class DataTypeConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            writer.WriteValue(value.ToString());
+        }
     }
 }
