@@ -82,12 +82,12 @@ namespace TNDStudios.Utils.Configuration
 
     public class Taxonomy
     {
-        public Dictionary<String, TaxonomyNode> Nodes { get; set; }
+        public Dictionary<String, TaxonomyNode> Nodes { get; set; } = new Dictionary<string, TaxonomyNode>();
     }
 
     public class TaxonomyNode
     {
-        public Dictionary<String, TaxonomyProperty> Properties { get; set; }
+        public Dictionary<String, TaxonomyProperty> Properties { get; set; } = new Dictionary<string, TaxonomyProperty>();
     }
 
     public class TaxonomyProperty
