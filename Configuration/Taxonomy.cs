@@ -25,6 +25,23 @@ namespace TNDStudios.Utils.Configuration
             return String.Empty;
         }
 
+        /// <summary>
+        /// Read from a given branch downwards rendering the branch
+        /// heirarchically
+        /// </summary>
+        /// <param name="taxonomy"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private JObject ReadAsJson(string taxonomy, string path)
+            => BranchAsJson(taxonomy, path);
+
+        private JObject BranchAsJson(string taxonomy, string path)
+        {
+            JObject result = new JObject();
+
+            return result;
+        }
+
         public Boolean Write(string taxonomy, string path, KeyValuePair<String, TaxonomyProperty> property)
         {
             Taxonomies.TryGetValue(taxonomy, out Taxonomy _taxonomy);
@@ -46,7 +63,7 @@ namespace TNDStudios.Utils.Configuration
             return true;
         }
 
-        public Dictionary<String, TaxonomyProperty> Read(string taxonomy, string path)
+        public Dictionary<String, TaxonomyProperty> Read(string taxonomy, string path, bool inherit)
         {
             Dictionary<String, TaxonomyProperty> _result = new Dictionary<string, TaxonomyProperty>();
 
@@ -62,16 +79,20 @@ namespace TNDStudios.Utils.Configuration
                     }
                 }
 
-                // Regardless of if a node was found, move to the parent
-                // Get the parent properties and add them in where they don't exist
-                string _parentPath = GetParent(path);
-                if (_parentPath != String.Empty)
+                // inherit values?
+                if (inherit)
                 {
-                    Dictionary<string, TaxonomyProperty> _parent = Read(taxonomy, _parentPath);
-                    foreach (string key in _parent.Keys)
+                    // Regardless of if a node was found, move to the parent
+                    // Get the parent properties and add them in where they don't exist
+                    string _parentPath = GetParent(path);
+                    if (_parentPath != String.Empty)
                     {
-                        if (!_result.ContainsKey(key))
-                            _result[key] = _parent[key];
+                        Dictionary<string, TaxonomyProperty> _parent = Read(taxonomy, _parentPath, inherit);
+                        foreach (string key in _parent.Keys)
+                        {
+                            if (!_result.ContainsKey(key))
+                                _result[key] = _parent[key];
+                        }
                     }
                 }
             }

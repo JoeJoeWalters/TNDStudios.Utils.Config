@@ -1,16 +1,15 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using TNDStudios.Utils.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TNDStudios.Utils.Configuration;
 
-namespace Configuration.App
+namespace Configuration.Api
 {
     public class Functions
     {
@@ -26,7 +25,9 @@ namespace Configuration.App
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "properties/{taxonomy}/{path}")] HttpRequest req, string path, String taxonomy,
             ILogger log)
         {
-            Dictionary<String, TaxonomyProperty> properties = _taxonomyContainer.Read(taxonomy, path);
+            bool inherit = req.GetQueryValue<bool>("inherit", false);
+            string renderType = req.GetQueryValue<string>("render", "system");
+            Dictionary<String, TaxonomyProperty> properties = _taxonomyContainer.Read(taxonomy, path, inherit);
             return new OkObjectResult(properties);
         }
 
@@ -42,7 +43,7 @@ namespace Configuration.App
             foreach (String key in values.Keys)
                 _taxonomyContainer.Write(taxonomy, path, new KeyValuePair<String, TaxonomyProperty>(key, values[key]));
 
-            Dictionary<String, TaxonomyProperty> properties = _taxonomyContainer.Read(taxonomy, path);
+            Dictionary<String, TaxonomyProperty> properties = _taxonomyContainer.Read(taxonomy, path, false);
             return new OkObjectResult(properties);
         }
 

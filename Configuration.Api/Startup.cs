@@ -1,14 +1,11 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TNDStudios.Utils.Configuration;
 using TNDStudios.Utils.Configuration.Mocks;
 
-[assembly: FunctionsStartup(typeof(Configuration.App.Startup))]
+[assembly: FunctionsStartup(typeof(Configuration.Api.Startup))]
 
-namespace Configuration.App
+namespace Configuration.Api
 {
     public class Startup : FunctionsStartup
     {
