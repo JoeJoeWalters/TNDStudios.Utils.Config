@@ -47,9 +47,16 @@ namespace Configuration.Api
             return new OkObjectResult(properties);
         }
 
-        private int List<T>()
+        [FunctionName("deleteproperties")]
+        public async Task<IActionResult> DeleteProperties(
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "properties/{taxonomy}/{path}/{propertyName}")] HttpRequest req, string path, String taxonomy, String propertyName,
+            ILogger log)
         {
-            throw new NotImplementedException();
+            Boolean result = _taxonomyContainer.Delete(taxonomy, path, propertyName);
+            if (result)
+                return new OkResult();
+            else
+                return new NotFoundResult();
         }
     }
 }

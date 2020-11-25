@@ -63,6 +63,22 @@ namespace TNDStudios.Utils.Configuration
             return true;
         }
 
+        public Boolean Delete(string taxonomy, string path, string propertyName)
+        {
+            Taxonomies.TryGetValue(taxonomy, out Taxonomy _taxonomy);
+            if (_taxonomy != null)
+            {
+                _taxonomy.Nodes.TryGetValue(path, out TaxonomyNode _node);
+                if (_node != null && _node.Properties.ContainsKey(propertyName))
+                {
+                    _node.Properties.Remove(propertyName);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public Dictionary<String, TaxonomyProperty> Read(string taxonomy, string path, bool inherit)
         {
             Dictionary<String, TaxonomyProperty> _result = new Dictionary<string, TaxonomyProperty>();

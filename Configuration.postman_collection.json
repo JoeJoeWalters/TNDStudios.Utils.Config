@@ -11,7 +11,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "http://localhost:7071/api/properties/main/Tenant1.Application1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"properties",
+						"main",
+						"Tenant1.Application1"
+					]
 				},
 				"description": "Get the properties of a node (taxon)"
 			},
@@ -38,6 +49,29 @@
 						"properties",
 						"main",
 						"Tenant1.Application1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Properties",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7071/api/properties/main/Tenant1.Application1/API::Unchanging",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7071",
+					"path": [
+						"api",
+						"properties",
+						"main",
+						"Tenant1.Application1",
+						"API::Unchanging"
 					]
 				}
 			},

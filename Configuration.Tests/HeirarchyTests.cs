@@ -16,8 +16,8 @@ namespace Configuration.Tests
             TaxonomyContainer _container = new TenantTaxonomyContainer();
 
             // ACT
-            Dictionary<String, TaxonomyProperty> _module1 = _container.Read("main", "Tenant1.Application1.Module1");
-            Dictionary<String, TaxonomyProperty> _module2 = _container.Read("main", "Tenant1.Application1.Module2");
+            Dictionary<String, TaxonomyProperty> _module1 = _container.Read("main", "Tenant1.Application1.Module1", true);
+            Dictionary<String, TaxonomyProperty> _module2 = _container.Read("main", "Tenant1.Application1.Module2", true);
 
             // ASSERT
             _module1["API::Unchanging"].Value.Should().Be(_module2["API::Unchanging"].Value);
